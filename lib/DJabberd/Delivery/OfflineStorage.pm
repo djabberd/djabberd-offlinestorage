@@ -121,7 +121,7 @@ sub deliver {
     my $packet = { 'type'    => ref($stanza),
                    'element' => $stanza->element_name,
                    'stanza'  => $stanza->innards_as_xml,
-                   'ns'      => $stanza->namespace,
+                   'ns'      => 'jabber:client',
                    'attrs'   => {}                      };
     map { $packet->{attrs}->{$_} = $stanza->attrs->{$_} } keys %{$stanza->{attrs}};
 
