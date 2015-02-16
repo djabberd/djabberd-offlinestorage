@@ -121,9 +121,11 @@ sub deliver {
     my $packet = { 'type'    => ref($stanza),
                    'element' => $stanza->element_name,
                    'stanza'  => $stanza->innards_as_xml,
-                   'ns'      => 'jabber:client',
+                   'ns'      => $stanza->namespace,
                    'attrs'   => {}                      };
     map { $packet->{attrs}->{$_} = $stanza->attrs->{$_} } keys %{$stanza->{attrs}};
+
+    $packet->replace_ns("jabber:server", "jabber:client");
 
     my $store_cb = sub {
       $DJabberd::Stats::counter{deliver_to_offline_storage}++;
